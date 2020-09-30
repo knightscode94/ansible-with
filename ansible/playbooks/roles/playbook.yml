@@ -1,0 +1,22 @@
+- hosts: jenkins
+  connection: local
+  become: true
+
+  vars:
+    jenkins_hostname: localhost
+    java_packages:
+      - openjdk-8-jdk
+  roles:
+    - role: java
+    - role: jenkins
+
+- hosts: manager
+  become: yes
+  roles:
+    - dockerswarm
+    - manager
+- hosts: worker
+  become: yes
+  roles:
+    - dockerswarm
+    - worker
